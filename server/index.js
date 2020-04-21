@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
+const weather = require('./weather/weather.js');
+const db = require('../database/index');
 
 /********* Middleware *********/
 app.use(express.static(__dirname + '/../client/dist'));
@@ -9,8 +11,33 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /********* Routes + Controllers *********/
+app.post('/weather', (req, res) => {
+    console.log('POST request for weather received');
+    weather.fetchWeather(req, (error, data) => {
+        if (error) {
+            console.log('Error posting weather to the database: ', error);
+            res.status(400);
+        }
+        else {
+            res.status(200);
+            console.log('Posted weather data!');
+        }
+    });
+});
+
 app.get('/weather', (req, res) => {
     console.log('GET request for weather received');
+    db.getWeather(req, (error, data) => {
+        if (error) {
+            console.log('Error getting weather from the database: ', error);
+            res.status(400);
+        }
+        else {
+            res.status(200);
+            res.send(data);
+            console.log('Retrieved weather data from the database!');
+        }
+    });
 })
 
 /********* Start App *********/

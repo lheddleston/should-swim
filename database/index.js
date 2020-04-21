@@ -23,8 +23,7 @@ const postWeather = (cleanData, callback) => {
     })
 };
 const getWeather = (value, callback) => {
-
-    let queryString = `SELECT * FROM current limit 1;`;
+    let queryString = `SELECT * FROM current ORDER BY date DESC LIMIT 1;`;
     connection.query(queryString, (error, data) => {
         if (error) {
             callback(error, null);
@@ -32,7 +31,7 @@ const getWeather = (value, callback) => {
         else {
             callback(null, data);
         }
-    })
+    });
 };
 
 module.exports = {
