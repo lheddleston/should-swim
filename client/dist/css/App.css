@@ -1,0 +1,38 @@
+.app {
+    font-family: 'Didot';
+	font-weight:normal;
+}
+.title {
+	font-size:3.5em;
+	line-height:1.1em;
+	text-align: center;
+}
+.reason {
+	font-size:3.5em;
+	line-height:1.1em;
+	text-align: center;
+}
+.temp {
+	font-size:2.5em;
+	line-height:1.1em;
+	text-align: center;
+
+}
+.wind {
+	font-size:2.5em;
+	line-height:1.1em;
+	text-align: center;
+
+}
+.gridGallery {
+    display: flex;
+    justify-content: space-between;
+}
+.images {
+
+	position:relative;
+    width: 350px;
+    height: 350px;
+    background: #000000;
+    opacity: 70%;
+}
