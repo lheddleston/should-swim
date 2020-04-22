@@ -16,7 +16,8 @@ const fetchWeather = (req, callback) => {
             let temp = Math.floor(response.data.current.temp * (9 / 5) - 459.67);
             cleanData.temp = temp;
             cleanData.windSpeed = response.data.current.wind_speed;
-            console.log('Request to get weather made!');
+            cleanData.visibility = Math.floor(response.data.current.visibility);
+            console.log('Request to get weather made!', cleanData);
             db.postWeather(cleanData, callback);
         })
         .catch((error) => {

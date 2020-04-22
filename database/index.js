@@ -12,7 +12,18 @@ connection.connect((error) => {
 
 const postWeather = (cleanData, callback) => {
     console.log("Clean Data from the DB", cleanData);
-    let queryString = `INSERT INTO current (date, dayRain, temp, windSpeed) VALUES (${cleanData.date}, ${cleanData.dayRain}, ${cleanData.temp}, ${cleanData.windSpeed})`;
+    let queryString = `INSERT INTO current (date, dayRain, temp, windSpeed, visibility) VALUES (${cleanData.date}, ${cleanData.dayRain}, ${cleanData.temp}, ${cleanData.windSpeed}, ${cleanData.visibility})`;
+    connection.query(queryString, (error, data) => {
+        if (error) {
+            callback(error, null);
+        }
+        else {
+            callback(null, data);
+        }
+    })
+};
+const postWater = (waterTemp, callback) => {
+    let queryString = `INSERT INTO water (temp) VALUES (${waterTemp.temp})`;
     connection.query(queryString, (error, data) => {
         if (error) {
             callback(error, null);
@@ -33,10 +44,23 @@ const getWeather = (value, callback) => {
         }
     });
 };
+const getWater = (value, callback) => {
+    let queryString = `SELECT * FROM water ORDER BY temp DESC LIMIT 1;`;
+    connection.query(queryString, (error, data) => {
+        if (error) {
+            callback(error, null);
+        }
+        else {
+            callback(null, data);
+        }
+    });
+};
 
 module.exports = {
     connection,
     postWeather,
-    getWeather
+    postWater,
+    getWeather,
+    getWater
 };
 
